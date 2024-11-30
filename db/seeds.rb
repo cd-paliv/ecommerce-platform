@@ -34,4 +34,20 @@ Color.find_or_create_by!(name: "Amarillo", hex_value: "#FFFF00")
 Color.find_or_create_by!(name: "Blanco", hex_value: "#FFFFFF")
 Color.find_or_create_by!(name: "Negro", hex_value: "#000000")
 
-puts "Categorias: #{Category.count} | Talles #{Size.count} | Colores: #{Color.count}"
+# Create users
+User.find_or_create_by!(username: "admin", email: "admin@avivas.com", name: "Admin 1") do |user|
+  user.password = "admin"
+  user.role = "admin"
+end
+
+User.find_or_create_by!(username: "man", email: "man@avivas.com", name: "Man 1") do |user|
+  user.password = "man"
+  user.role = "manager"
+end
+
+User.find_or_create_by!(username: "emp", email: "emp@avivas.com", name: "Emp 1") do |user|
+  user.password = "emp"
+  user.role = "employee"
+end
+
+puts "Categorias: #{Category.count} | Talles #{Size.count} | Colores: #{Color.count} | Usuarios: #{User.count}"
