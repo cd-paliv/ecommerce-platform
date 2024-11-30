@@ -36,9 +36,9 @@
     <%= form.text_field :phone %>
   </div>
 
-  <div>
-    <%= form.label :deactivated, style: "display: block" %>
-    <%= form.checkbox :deactivated %>
+  <div class="dropdown">
+    <%= form.label :role, style: "display: block" %>
+    <%= form.select :role, User::ROLES.map { |role| [role.titleize, role] }%>
   </div>
 
   <div>
