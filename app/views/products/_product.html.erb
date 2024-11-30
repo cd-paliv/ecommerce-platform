@@ -1,0 +1,37 @@
+<div id="<%= dom_id product %>">
+  <p>
+    <strong>Name:</strong>
+    <%= product.name %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= product.description %>
+  </p>
+
+  <p>
+    <strong>Stock:</strong>
+    <%= product.stock %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= product.price %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= product.categories.map(&:name).join(", ") %>
+  </p>
+
+  <p>
+    <strong>Size:</strong>
+    <%= product.size_id %>
+  </p>
+
+  <p>
+    <strong>Color:</strong>
+    <%= product.color_id %>
+  </p>
+
+</div>

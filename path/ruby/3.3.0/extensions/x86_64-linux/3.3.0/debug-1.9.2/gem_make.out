@@ -1,0 +1,19 @@
+current directory: /home/paliv/Documentos/avivas/path/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+/home/paliv/.rbenv/versions/3.3.5/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/paliv/Documentos/avivas/path/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20241130-15062-buhl1d sitelibdir\=./.gem.20241130-15062-buhl1d clean
+
+current directory: /home/paliv/Documentos/avivas/path/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20241130-15062-buhl1d sitelibdir\=./.gem.20241130-15062-buhl1d
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/paliv/Documentos/avivas/path/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20241130-15062-buhl1d sitelibdir\=./.gem.20241130-15062-buhl1d install
+/usr/bin/install -c -m 0755 debug.so ./.gem.20241130-15062-buhl1d/debug
+
+current directory: /home/paliv/Documentos/avivas/path/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20241130-15062-buhl1d sitelibdir\=./.gem.20241130-15062-buhl1d clean
