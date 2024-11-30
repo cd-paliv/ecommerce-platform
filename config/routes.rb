@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :users do
+    member do
+      patch :deactivate
+    end
+  end
   resources :products
   resources :colors
   resources :sizes

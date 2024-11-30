@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show edit update destroy deactivate ]
 
   # GET /users or /users.json
   def index
@@ -57,14 +57,35 @@ class UsersController < ApplicationController
     end
   end
 
+  # PATCH /users/1/deactivate
+  def deactivate
+    if @user.admin?
+      respond_to do |format|
+        format.html { redirect_to users_path, alert: "Admin user cannot be deactivated." }
+        format.json { render json: { error: "Admin user cannot be deactivated." }, status: :unprocessable_entity }
+      end
+    else
+      @user.update(deactivated: true, password_digest: SecureRandom.hex)
+      respond_to do |format|
+        if @user.save
+          format.html { redirect_to users_path, notice: "User was successfully deactivated." }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :index, status: :unprocessable_entity }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params.expect(:id))
+      @user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :username, :email, :name, :password_digest, :phone, :role ])
+      params.require(:user).permit(:username, :email, :name, :password, :password_confirmation, :phone, :role)
     end
 end

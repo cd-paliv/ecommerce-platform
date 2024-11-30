@@ -24,9 +24,9 @@
     <%= user.phone %>
   </p>
 
-  <p>
-    <strong>Deactivated:</strong>
-    <%= user.deactivated %>
-  </p>
-
+  <% if user.deactivated %>
+    <p style="color: red">
+      <strong>Deactivated</strong>
+    </p>
+  <% end %>
 </div>
