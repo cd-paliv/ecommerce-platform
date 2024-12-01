@@ -1,16 +1,4 @@
 <%= form_with(model: sale) do |form| %>
-  <% if sale.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
-
-      <ul>
-        <% sale.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div>
     <%= form.fields_for :sale_items do |si_form| %>
       <div class="nested-fields">
