@@ -1,5 +1,6 @@
 class SizesController < ApplicationController
   before_action :set_size, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /sizes or /sizes.json
   def index

@@ -1,11 +1,11 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @user %>
 
 <div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <% if !@user.deactivated %>
-    <%= link_to "Deactivate", "#", id: 'deactivate-link', data: { bs_toggle: 'modal', bs_target: '#deactivateModal' } %> |
+  <% if can? :manage, @user %>
+    <%= link_to "Edit this user", edit_user_path(@user) %> |
+    <% if !@user.deactivated %>
+      <%= link_to "Deactivate", "#", id: 'deactivate-link', data: { bs_toggle: 'modal', bs_target: '#deactivateModal' } %> |
+    <% end %>
   <% end %>
   <%= link_to "Back to users", users_path %>
 

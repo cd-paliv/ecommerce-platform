@@ -12,8 +12,9 @@ class Ability
       can :manage, :all
       cannot :manage, User, role: "admin"
     elsif user.employee?
-      can :read, Product
       # can :manage, Sale
     end
+    can :read, Product
+    can :read, Category
   end
 end
