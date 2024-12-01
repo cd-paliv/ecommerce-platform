@@ -8,7 +8,20 @@ Rails.application.routes.draw do
       patch :deactivate
     end
   end
-  resources :products
+
+  resources :products do
+    member do
+    end
+  end
+
+  resources :sales, except: [ :new, :destroy, :create ] do
+    member do
+      patch :cancel
+      post :checkout
+    end
+    resources :sale_items, only: [ :create, :destroy ]
+  end
+
   resources :colors
   resources :sizes
   resources :categories

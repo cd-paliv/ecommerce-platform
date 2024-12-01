@@ -1,0 +1,11 @@
+<%= render @sale %>
+
+<div>
+  <%= link_to "Edit this sale", edit_sale_path(@sale) %> |
+  <%= link_to "Back to sales", sales_path %> |
+  <% if @sale.pending? %>
+    <%= link_to "Checkout", checkout_sale_path(@sale), data: { turbo_method: :post } %> |
+  <% elsif @sale.completed? %>
+    <%= link_to "Cancel", cancel_sale_path(@sale), data: { turbo_method: :patch } %> |
+  <% end %>
+</div>

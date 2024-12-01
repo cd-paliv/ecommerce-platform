@@ -1,0 +1,32 @@
+<%= form_with(model: sale, local: true) do |form| %>
+  <div>
+    <%= form.fields_for :sale_items do |f| %>
+      <div class="nested-fields">
+        <strong><%= f.label :product_id, "Product:" %></strong>
+        <span><%= f.object.product.name %></span> |
+
+        <strong>Price:</strong> <%= number_to_currency(f.object.price) %> |
+
+        <strong><%= f.label :quantity, "Quantity:" %></strong>
+        <%= f.number_field :quantity, min: 1 %> |
+
+        <strong>Subtotal:</strong>
+        <span><%= number_to_currency(f.object.subtotal) %></span> |
+
+        <%= f.hidden_field :price %>
+
+        <%= link_to "Remove", sale_sale_item_path(sale_id: sale.id, id: f.object.id), 
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this item?" } %>
+      </div>
+    <% end %>
+  </div>
+
+  <br>
+  <div>
+    <strong>Total:</strong> <span id="sale-total"><%= number_to_currency(sale.total) %></span>
+  </div>
+
+  <div>
+    <%= form.submit "Update Cart" %>
+  </div>
+<% end %>

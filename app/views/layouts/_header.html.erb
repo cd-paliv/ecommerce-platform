@@ -1,6 +1,8 @@
 <nav>
+    <%= link_to "Todos los productos", products_path %>
     <% if current_user %>
         <%= link_to "Logout", sessions_destroy_path, method: :destroy %>
+        <%= link_to "Carrito", sale_path(current_sale) %>
     <% else %>
         <%= link_to "Login", sessions_new_path %>
     <% end %>

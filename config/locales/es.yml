@@ -10,3 +10,11 @@ es:
         password_confirmation: "Confirmación de contraseña"
         phone: "Teléfono"
         role: "Rol"
+
+    errors:
+      models:
+        sale_item:
+          attributes:
+            price:
+              blank: "no puede estar en blanco"
+              not_a_number: "no es un número"

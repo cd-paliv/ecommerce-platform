@@ -23,7 +23,7 @@ Category.find_or_create_by!(name: "Niño", category_type: "gender")
 
 # Create sizes
 [ "XS", "S", "M", "L", "XL", "37", "38", "39", "40", "41" ].each do |size_name|
-    Size.find_or_create_by!(name: size_name)
+  Size.find_or_create_by!(name: size_name)
 end
 
 # Create colors
@@ -33,6 +33,41 @@ Color.find_or_create_by!(name: "Verde", hex_value: "#00FF00")
 Color.find_or_create_by!(name: "Amarillo", hex_value: "#FFFF00")
 Color.find_or_create_by!(name: "Blanco", hex_value: "#FFFFFF")
 Color.find_or_create_by!(name: "Negro", hex_value: "#000000")
+
+# Create products
+p1 = Product.find_or_create_by!(
+  name: "Remera Rojo Fuego",
+  description: "La mejor remera que te prende fuego",
+  stock: 100,
+  price: 29.99,
+  size: Size.find_by(name: "M"),
+  color:  Color.find_by(name: "Rojo")
+)
+p1.categories = [
+  Category.find_by(name: "Remera"),
+  Category.find_by(name: "Verano"),
+  Category.find_by(name: "Mujer")
+]
+
+p2 = Product.find_or_create_by!(
+  name: "Camisa Azul Cielo",
+  description: "Una camisa azul como el cielo",
+  stock: 50,
+  price: 49.99,
+  size: Size.find_by!(name: "S"),
+  color: Color.find_by!(name: "Azul"),
+)
+p2.categories = [ Category.find_by(name: "Remera"), Category.find_by(name: "Invierno"), Category.find_by(name: "Hombre") ]
+
+p3 = Product.find_or_create_by!(
+  name: "Pantalón Verde Bosque",
+  description: "Pantalones verdes como el bosque",
+  stock: 75,
+  price: 59.99,
+  size: Size.find_by!(name: "L"),
+  color: Color.find_by!(name: "Verde")
+)
+p3.categories = [ Category.find_by(name: "Pantalon"), Category.find_by(name: "Otoño"), Category.find_by(name: "Hombre") ]
 
 # Create users
 User.find_or_create_by!(username: "admin", email: "admin@avivas.com", name: "Admin 1") do |user|
@@ -50,4 +85,4 @@ User.find_or_create_by!(username: "emp", email: "emp@avivas.com", name: "Emp 1")
   user.role = "employee"
 end
 
-puts "Categorias: #{Category.count} | Talles #{Size.count} | Colores: #{Color.count} | Usuarios: #{User.count}"
+puts "Categorias: #{Category.count} | Talles #{Size.count} | Colores: #{Color.count} | Usuarios: #{User.count} | Productos: #{Product.count}"

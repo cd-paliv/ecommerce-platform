@@ -1,0 +1,16 @@
+<div id="<%= dom_id sale %>">
+  <strong>Status:</strong> <%= sale.status.titleize %>
+
+  <% sale.sale_items.each do |si| %>
+    <p>
+      <strong>Product:</strong> <%= si.product.name %> |
+      <strong>Precio:</strong> <%= number_to_currency(si.price) %> |
+      <strong>Cantidad:</strong> <%= si.quantity %>
+    </p>
+  <% end %>
+
+  <p>
+    <strong>Total:</strong>
+    <%= sale.total %>
+  </p>
+</div>

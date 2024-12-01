@@ -1,0 +1,13 @@
+<% content_for :title, "Sales" %>
+
+<h1>Sales</h1>
+
+<div id="sales">
+  <% @sales.each do |sale| %>
+    <%= render sale %>
+    <p>
+      <%= link_to "Show this sale", sale %>
+    </p>
+  <% end %>
+</div>
+
