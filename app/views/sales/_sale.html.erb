@@ -1,0 +1,20 @@
+<div id="<%= dom_id sale %>">
+  <p>
+    <strong>Total:</strong>
+    <%= sale.total %>
+  </p>
+
+  <% if sale.is_canceled %>
+    <p style="color: red">
+      <strong>Canceled</strong>
+    </p>
+  <% end %>
+
+  <% sale.sale_items.each do |si| %>
+    <p>
+      <strong>Product:</strong> <%= si.product.name %> |
+      <strong>Precio:</strong> <%= number_to_currency(si.price) %> |
+      <strong>Cantidad:</strong> <%= si.quantity %>
+    </p>
+  <% end %>
+</div>

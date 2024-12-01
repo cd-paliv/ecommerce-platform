@@ -1,0 +1,38 @@
+<%= form_with(model: sale) do |form| %>
+  <% if sale.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
+
+      <ul>
+        <% sale.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.fields_for :sale_items do |si_form| %>
+      <div class="nested-fields">
+        <%= si_form.label :product_id, "Product" %>
+        <%= si_form.collection_select :product_id, Product.all, :id, :name, prompt: "Select a product", class: "product-select" %>
+        <%= si_form.label :quantity %>
+        <%= si_form.number_field :quantity, min: 1, class: "quantity-input" %>
+        <%= si_form.hidden_field :price, class: "price-input" %>
+        <%= link_to "Remove", "#", class: "remove_fields" %>
+      </div>
+    
+    <% end %>
+    <%= link_to "Add product", "#", id: "add_product" %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :total %>
+  </div>
+  
+  <strong>Total:</strong> <span id="sale-total"><%= sale.total %></span>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
