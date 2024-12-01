@@ -1,5 +1,5 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: %i[ index show edit update checkout cancel ]
+  before_action :set_sale, only: %i[ show edit update checkout cancel ]
 
   # GET /sales or /sales.json
   def index
@@ -29,7 +29,18 @@ class SalesController < ApplicationController
 
   # POST /sales/1/checkout
   def checkout
+    if @sale.sale_items.empty?
+      redirect_to @sale, alert: "Sale is empty."
+      return
+    end
+
+    @sale.sale_items.each do |sale_item|
+      product = sale_item.product
+      product.update!(stock: product.stock - sale_item.quantity)
+    end
+
     @sale.update!(status: "completed")
+
     redirect_to @sale, notice: "Sale was successfully completed."
 
     new_sale = Sale.create!(user: current_user)
@@ -38,12 +49,17 @@ class SalesController < ApplicationController
 
   # PATCH /sales/1/cancel
   def cancel
+    @sale.sale_items.each do |sale_item|
+      product = sale_item.product
+      product.update!(stock: product.stock + sale_item.quantity)
+    end
+
     @sale.update!(status: "canceled")
+
     redirect_to @sale, notice: "Sale was successfully canceled."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_sale
       @sale = Sale.find(params[:id])
     end

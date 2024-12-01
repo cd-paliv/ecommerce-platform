@@ -6,4 +6,8 @@ class Product < ApplicationRecord
   has_many :sales, through: :sale_items
 
   validates :name, :price, :stock, presence: true
+
+  def can_sell?(quantity)
+    self.stock >= quantity
+  end
 end

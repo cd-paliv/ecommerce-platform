@@ -9,10 +9,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products
-  resources :colors
-  resources :sizes
-  resources :categories
+  resources :products do
+    member do
+    end
+  end
 
   resources :sales, except: [ :new, :destroy, :create ] do
     member do
@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     end
     resources :sale_items, only: [ :create, :destroy ]
   end
+
+  resources :colors
+  resources :sizes
+  resources :categories
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
