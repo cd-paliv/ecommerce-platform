@@ -10,4 +10,12 @@ class Product < ApplicationRecord
   def can_sell?(quantity)
     self.stock >= quantity
   end
+
+  def sell(quantity)
+    self.update!(stock: self.stock - quantity)
+  end
+
+  def restock(quantity)
+    self.update!(stock: self.stock + quantity)
+  end
 end

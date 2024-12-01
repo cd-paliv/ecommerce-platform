@@ -21,6 +21,7 @@ class SalesController < ApplicationController
         format.html { redirect_to @sale, notice: "Sale was successfully updated." }
         format.json { render :show, status: :ok, location: @sale }
       else
+        flash.now[:error] = @sale.errors.full_messages.join(", ")
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end
@@ -34,11 +35,6 @@ class SalesController < ApplicationController
       return
     end
 
-    @sale.sale_items.each do |sale_item|
-      product = sale_item.product
-      product.update!(stock: product.stock - sale_item.quantity)
-    end
-
     @sale.update!(status: "completed")
 
     redirect_to @sale, notice: "Sale was successfully completed."
@@ -49,11 +45,6 @@ class SalesController < ApplicationController
 
   # PATCH /sales/1/cancel
   def cancel
-    @sale.sale_items.each do |sale_item|
-      product = sale_item.product
-      product.update!(stock: product.stock + sale_item.quantity)
-    end
-
     @sale.update!(status: "canceled")
 
     redirect_to @sale, notice: "Sale was successfully canceled."

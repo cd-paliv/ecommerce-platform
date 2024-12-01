@@ -6,7 +6,8 @@ class Sale < ApplicationRecord
   accepts_nested_attributes_for :sale_items
 
   before_save :calculate_total
-  after_update :handle_cancelation, if: :is_canceled?
+  after_update :handle_cancelation, if: :canceled?
+  after_update :handle_checkout, if: :completed?
 
   STATUS = %w[pending completed canceled].freeze
 
@@ -22,12 +23,8 @@ class Sale < ApplicationRecord
     self.status == "completed"
   end
 
-  def is_canceled?
-    self.is_canceled
-  end
-
   def total
-    sale_items.to_a.sum { |si| si.price * si.quantity }
+    self.sale_items.to_a.sum { |si| si.price * si.quantity }
   end
 
   private
@@ -36,7 +33,15 @@ class Sale < ApplicationRecord
     self.total = sale_items.to_a.sum { |si| si.price * si.quantity }
   end
 
+  def handle_checkout
+    self.sale_items.each do |sale_item|
+      sale_item.product.sell(sale_item.quantity)
+    end
+  end
+
   def handle_cancelation
-    ## restock products
+    self.sale_items.each do |sale_item|
+      sale_item.product.restock(sale_item.quantity)
+    end
   end
 end
