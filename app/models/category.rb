@@ -1,8 +1,7 @@
 class Category < ApplicationRecord
     has_and_belongs_to_many :products
 
-    validates :name, presence: true
-    validates :category_type, presence: true
+    validates :name, :category_type, presence: true
 
     scope :clothing, -> { where(category_type: "clothing") }
     scope :seasons, -> { where(category_type: "seasons") }

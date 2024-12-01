@@ -5,7 +5,5 @@ class Product < ApplicationRecord
   has_many :sale_items
   has_many :sales, through: :sale_items
 
-  validates :name, presence: true
-  validates :price, presence: true
-  validates :stock, presence: true
+  validates :name, :price, :stock, presence: true
 end

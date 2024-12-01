@@ -1,9 +1,5 @@
 <div id="<%= dom_id sale %>">
-  <% if sale.is_canceled %>
-    <p style="color: red">
-      <strong>Canceled</strong>
-    </p>
-  <% end %>
+  <strong>Status:</strong> <%= sale.status.titleize %>
 
   <% sale.sale_items.each do |si| %>
     <p>

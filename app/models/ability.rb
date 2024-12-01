@@ -13,7 +13,8 @@ class Ability
     #   can :manage, :all
     #   cannot :manage, User, role: "admin"
     # elsif user.employee?
-    #   # can :manage, Sale
+    #   can :manage, Sale
+    #   can :manage, Product
     # end
     # can :read, Product
     # can :read, Category

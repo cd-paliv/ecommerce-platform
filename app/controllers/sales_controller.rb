@@ -1,5 +1,5 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: %i[ show edit update destroy ]
+  before_action :set_sale, only: %i[ show edit update checkout cancel ]
 
   # GET /sales or /sales.json
   def index
@@ -54,14 +54,19 @@ class SalesController < ApplicationController
     end
   end
 
-  # DELETE /sales/1 or /sales/1.json
-  def destroy
-    @sale.destroy!
+  # POST /sales/1/checkout
+  def checkout
+    @sale.update!(status: "completed")
+    redirect_to @sale, notice: "Sale was successfully completed."
 
-    respond_to do |format|
-      format.html { redirect_to sales_path, status: :see_other, notice: "Sale was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    new_sale = Sale.create!(user: current_user)
+    session[:sale_id] = new_sale.id
+  end
+
+  # PATCH /sales/1/cancel
+  def cancel
+    @sale.update!(status: "canceled")
+    redirect_to @sale, notice: "Sale was successfully canceled."
   end
 
   private

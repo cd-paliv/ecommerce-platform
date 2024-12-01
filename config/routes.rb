@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   resources :sizes
   resources :categories
   resources :sales do
+    member do
+      patch :cancel
+      post :checkout
+    end
     resources :sale_items, only: [ :create, :destroy ]
   end
 
