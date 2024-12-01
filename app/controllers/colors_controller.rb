@@ -1,5 +1,6 @@
 class ColorsController < ApplicationController
   before_action :set_color, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /colors or /colors.json
   def index

@@ -1,0 +1,32 @@
+<%= render @user %>
+
+<div>
+  <% if can? :manage, @user %>
+    <%= link_to "Edit this user", edit_user_path(@user) %> |
+    <% if !@user.deactivated %>
+      <%= link_to "Deactivate", "#", id: 'deactivate-link', data: { bs_toggle: 'modal', bs_target: '#deactivateModal' } %> |
+    <% end %>
+  <% end %>
+  <%= link_to "Back to users", users_path %>
+
+  <%= button_to "Destroy this user", @user, method: :delete %>
+</div>
+
+<!-- Deactivate modal -->
+<div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="deactivateModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deactivateModalLabel">Confirm Deactivation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to deactivate this user?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <%= button_to "Deactivate", deactivate_user_path(@user), method: :patch, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+</div>
