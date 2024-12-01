@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "sale_item/create"
   get "sessions/new"
   post "sessions/create"
   get "sessions/destroy"
@@ -9,11 +8,13 @@ Rails.application.routes.draw do
       patch :deactivate
     end
   end
+
   resources :products
   resources :colors
   resources :sizes
   resources :categories
-  resources :sales do
+
+  resources :sales, except: [ :new, :destroy, :create ] do
     member do
       patch :cancel
       post :checkout

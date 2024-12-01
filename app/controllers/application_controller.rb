@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
     handle_access_denied(exception)
   end
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
@@ -20,7 +22,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_sale
-    current_user ? sale = Sale.find_or_create_by(user: current_user, status: "pending") : sale = Sale.find_or_create_by(session_id: session.id, status: "pending")
+    if current_user
+      sale = Sale.find_by(user: current_user, status: "pending") || Sale.create!(user: current_user)
+    else
+      sale = Sale.find_by(session_id: session.id, status: "pending") || Sale.create!(session_id: session.id)
+    end
     sale
   end
 
@@ -35,5 +41,9 @@ class ApplicationController < ActionController::Base
       else
         redirect_to new_session_path, alert: "You need to log in before continuing."
       end
+    end
+
+    def record_not_found
+      render file: "#{Rails.root}/public/404.html", status: :not_found
     end
 end
