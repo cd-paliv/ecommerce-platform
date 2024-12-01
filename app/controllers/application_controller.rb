@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :set_locale
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-  helper_method :current_user
+  helper_method :current_user, :current_sale
 
   rescue_from CanCan::AccessDenied do |exception|
     handle_access_denied(exception)
@@ -18,6 +17,11 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     redirect_to new_session_path unless user_signed_in?
+  end
+
+  def current_sale
+    current_user ? sale = Sale.find_or_create_by(user: current_user, status: "pending") : sale = Sale.find_or_create_by(session_id: session.id, status: "pending")
+    sale
   end
 
   private

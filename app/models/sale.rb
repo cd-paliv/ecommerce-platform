@@ -6,12 +6,20 @@ class Sale < ApplicationRecord
   accepts_nested_attributes_for :sale_items
 
   before_save :calculate_total
-  after_update :handle_cancellation, if: :is_cancelled?
+  after_update :handle_cancellation, if: :is_canceled?
+
+  def is_canceled?
+    self.is_canceled
+  end
+
+  def total
+    sale_items.to_a.sum { |si| si.price * si.quantity }
+  end
 
   private
 
   def calculate_total
-    self.total = sale_items.each.sum { |si| si.price * si.quantity }
+    self.total = sale_items.to_a.sum { |si| si.price * si.quantity }
   end
 
   def handle_cancellation

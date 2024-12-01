@@ -1,9 +1,4 @@
 <div id="<%= dom_id sale %>">
-  <p>
-    <strong>Total:</strong>
-    <%= sale.total %>
-  </p>
-
   <% if sale.is_canceled %>
     <p style="color: red">
       <strong>Canceled</strong>
@@ -17,4 +12,9 @@
       <strong>Cantidad:</strong> <%= si.quantity %>
     </p>
   <% end %>
+
+  <p>
+    <strong>Total:</strong>
+    <%= sale.total %>
+  </p>
 </div>

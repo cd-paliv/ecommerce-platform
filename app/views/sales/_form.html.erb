@@ -1,26 +1,32 @@
-<%= form_with(model: sale) do |form| %>
+<%= form_with(model: sale, local: true) do |form| %>
   <div>
-    <%= form.fields_for :sale_items do |si_form| %>
+    <%= form.fields_for :sale_items do |f| %>
       <div class="nested-fields">
-        <%= si_form.label :product_id, "Product" %>
-        <%= si_form.collection_select :product_id, Product.all, :id, :name, prompt: "Select a product", class: "product-select" %>
-        <%= si_form.label :quantity %>
-        <%= si_form.number_field :quantity, min: 1, class: "quantity-input" %>
-        <%= si_form.hidden_field :price, class: "price-input" %>
-        <%= link_to "Remove", "#", class: "remove_fields" %>
+        <strong><%= f.label :product_id, "Product:" %></strong>
+        <span><%= f.object.product.name %></span> |
+
+        <strong>Price:</strong> <%= number_to_currency(f.object.price) %> |
+
+        <strong><%= f.label :quantity, "Quantity:" %></strong>
+        <%= f.number_field :quantity, min: 1 %> |
+
+        <strong>Subtotal:</strong>
+        <span><%= number_to_currency(f.object.subtotal) %></span> |
+
+        <%= f.hidden_field :price %>
+
+        <%= link_to "Remove", sale_sale_item_path(sale_id: sale.id, id: f.object.id), 
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this item?" } %>
       </div>
-    
     <% end %>
-    <%= link_to "Add product", "#", id: "add_product" %>
+  </div>
+
+  <br>
+  <div>
+    <strong>Total:</strong> <span id="sale-total"><%= number_to_currency(sale.total) %></span>
   </div>
 
   <div>
-    <%= form.hidden_field :total %>
-  </div>
-  
-  <strong>Total:</strong> <span id="sale-total"><%= sale.total %></span>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit "Update Cart" %>
   </div>
 <% end %>
