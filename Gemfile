@@ -49,3 +49,4 @@ gem "cancancan" # Authorization
 gem "bcrypt", "~> 3.1.7" # Secure password hashing
 
 gem "jquery-rails", "~> 4.6"
+gem "activestorage", "~> 8.0"

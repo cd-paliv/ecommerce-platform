@@ -18,3 +18,9 @@ es:
             price:
               blank: "no puede estar en blanco"
               not_a_number: "no es un número"
+        product:
+          attributes:
+            images:
+              blank: "no puede estar en blanco"
+      messages:
+        record_invalid: "La validación falló: %{errors}"
