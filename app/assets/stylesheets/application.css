@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
 */  
+
+.product-image {
+  width: 100%; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 300px; /* Set a maximum height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+}
