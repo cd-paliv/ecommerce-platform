@@ -45,6 +45,11 @@
     <%= form.label :color_id, "Color", style: "display: block" %>
     <%= form.collection_select :color_id, @colors, :id, :name %>
   </div>
+
+  <div class="field">
+    <%= form.label :images, style: "display: block" %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
   
 
   <div>
