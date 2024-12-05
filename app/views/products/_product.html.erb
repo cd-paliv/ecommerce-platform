@@ -34,4 +34,13 @@
     <%= product.color_id %>
   </p>
 
+  <p>
+    <strong>Images:</strong>
+    <div class="product-images">
+      <% product.images.each do |image| %>
+        <%= image_tag url_for(image) %>
+      <% end %>
+    </div>
+  </p>
+
 </div>
