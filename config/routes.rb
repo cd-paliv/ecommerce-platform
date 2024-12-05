@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "home/index"
   get "sessions/new"
   post "sessions/create"
   get "sessions/destroy"
@@ -31,5 +32,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "products#index"
+  root "home#index"
 end
