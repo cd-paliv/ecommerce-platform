@@ -6,14 +6,24 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><%= link_to "Inicio", root_path, class: "nav-link active", aria: { current: "page" } %></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Comprar</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
                     <ul class="dropdown-menu">
-                        <li><%= link_to "Todos los productos", products_path, class: "dropdown-item" %></li>
+                        <li><%= link_to "Todos", products_path, class: "dropdown-item" %></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><%= link_to "Popular Items", products_path, class: "dropdown-item" %></li>
                         <li><%= link_to "New Arrivals", products_path, class: "dropdown-item" %></li>
                     </ul>
                 </li>
+                <% if current_user %>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
+                        <ul class="dropdown-menu">
+                            <li><%= link_to "Todos", sales_path, class: "dropdown-item" %></li>
+                            <li><%= link_to "Crear nuevo usuario", products_path, class: "dropdown-item" %></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><%= link_to "Mis ventas", sales_path, class: "nav-link" %></li>
+                <% end %>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <% if current_user %>
