@@ -2,6 +2,7 @@
 
 <%= render "products/index/header" %>
 
+
 <div id="products">
   <div class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -9,10 +10,12 @@
         <%= render partial: "products/index/partial", locals: { product: product } %>
       <% end %>
     </div>
+    <div class="text-end mb-2">
+      <%= link_to "New product", new_product_path, class: "btn btn-outline-success" %>
+    </div>
   </div>
 </div>
 
 
-<%= link_to "New product", new_product_path, class: "btn btn-outline-success" %>
 
 <%= render 'layouts/footer' %>
