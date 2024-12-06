@@ -1,16 +1,21 @@
-<%= render partial: "sale", locals: { sale: @sale } %>
+<% content_for :title, "Carrito" %>
 
-<div class="container my-4">
-  <div class="row">
-    <div class="col text-right text-end">
-      <%= link_to "Volver", products_path, class: "btn btn-outline-secondary md-btn-flat mt-2 mr-3" %>
-      <% if @sale.pending? %>
-        <%= link_to "Checkout", checkout_sale_path(@sale), class: "btn btn-outline-primary mt-2", data: { turbo_method: :post } %>
-      <% elsif @sale.completed? %>
-        <%= link_to "Cancel", cancel_sale_path(@sale), class: "btn btn-outline-primary mt-2", data: { turbo_method: :patch } %>
-      <% end %>
+<% if @sale.sale_items.any? %>
+  <%= render partial: "sale", locals: { sale: @sale } %>
+
+  <div class="container my-4">
+    <div class="row">
+      <div class="col text-right text-end">
+        <%= link_to "Volver", products_path, class: "btn btn-outline-secondary md-btn-flat mt-2 mr-3" %>
+        <% if @sale.pending? %>
+          <%= link_to "Checkout", checkout_sale_path(@sale), class: "btn btn-outline-primary mt-2", data: { turbo_method: :post } %>
+        <% elsif @sale.completed? %>
+          <%= link_to "Cancel", cancel_sale_path(@sale), class: "btn btn-outline-primary mt-2", data: { turbo_method: :patch } %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% else %>
+  <%= render partial: "empty" %>
+<% end %>
 
-<%= render "layouts/footer" %>
