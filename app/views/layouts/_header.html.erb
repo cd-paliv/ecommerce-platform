@@ -1,34 +1,38 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <%= link_to "Avivas", root_path, class: "navbar-brand" %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><% link_to "Inicio", root_path, class: "nav-link active" %></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           Productos 
-          </a>
-          <ul class="dropdown-menu">
-            <%= link_to "Todos los productos", products_path, class: "dropdown-item" %>
-            <li><hr class="dropdown-divider"></li>
-            <a class="dropdown-item" href="#">Categoría 1</a>
-            <a class="dropdown-item" href="#">Categoría 2</a>
-          </ul>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <ul class="navbar-nav me-auto mb-2 mb-rg-0">
-            <% if current_user %>
-                <%= link_to "Carrito", sale_path(current_sale), class: "nav-link" %>
-                <%= link_to "Logout", sessions_destroy_path, method: :destroy, class: "nav-link" %>
-            <% else %>
-                <%= link_to "Login", sessions_new_path, class: "nav-link" %>
-            <% end %>
-        </ul>
-      </form>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <%= link_to "Avivas", root_path, class: "navbar-brand" %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><%= link_to "Inicio", root_path, class: "nav-link active", aria: { current: "page" } %></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Comprar</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><%= link_to "Todos los productos", products_path, class: "dropdown-item" %></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><%= link_to "Popular Items", products_path, class: "dropdown-item" %></li>
+                        <li><%= link_to "New Arrivals", products_path, class: "dropdown-item" %></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <% if current_user %>
+                <li class="nav-item ms-3">
+                    <%= link_to sale_path(current_sale), class: "btn btn-outline-dark" do %>
+                        <i class="bi-cart-fill me-1"></i>
+                        Carrito
+                        <span class="badge bg-dark text-white ms-1 rounded-pill"><%= current_sale.total_quantity %></span>
+                    <% end %>
+                </li>
+                <li class="nav-item ms-3">
+                    <%= link_to "Logout", sessions_destroy_path, method: :delete, class: "btn" %>
+                </li>
+                <% else %>
+                    <li class="nav-item">
+                        <%= link_to "Login", sessions_new_path, class: "btn btn-outline-dark" %>
+                    </li>
+                <% end %>
+            </form>
+        </div>
     </div>
-  </div>
 </nav>
