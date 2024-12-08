@@ -1,11 +1,14 @@
 <% content_for :title, "New user" %>
 
-<h1>New user</h1>
-
-<%= render "form", user: @user %>
-
-<br>
-
-<div>
-  <%= link_to "Back to users", users_path %>
+<div class="text-center py-5">
+  <h1>Creando nuevo usuario</h1>
 </div>
+
+
+<section>
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <%= render "form", user: @user %>
+    </div>
+  </div>
+</section>

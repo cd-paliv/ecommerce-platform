@@ -1,16 +1,77 @@
 <div id="<%= dom_id sale %>">
-  <strong>Status:</strong> <%= sale.status.titleize %>
-
-  <% sale.sale_items.each do |si| %>
-    <p>
-      <strong>Product:</strong> <%= si.product.name %> |
-      <strong>Precio:</strong> <%= number_to_currency(si.price) %> |
-      <strong>Cantidad:</strong> <%= si.quantity %>
-    </p>
-  <% end %>
-
-  <p>
-    <strong>Total:</strong>
-    <%= sale.total %>
-  </p>
+  <div class="container px-3 my-5 clearfix">
+    <div class="card">
+      <div class="card-header text-center">
+        <h2>Carrito</h2>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <%= form_with(model: sale, local: true) do |form| %>
+          <table class="table table-bordered m-0">
+            <thead>
+              <tr>
+                <th class="text-center py-3 px-4" style="min-width: 400px;">Nombre &amp; Detalles</th>
+                <th class="text-right py-3 px-4" style="width: 100px;">Precio</th>
+                <th class="text-center py-3 px-4" style="width: 120px;">Cantidad</th>
+                <th class="text-right py-3 px-4" style="width: 100px;">Subtotal</th>
+                <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% sale.sale_items.each do |si| %>
+                <tr>
+                  <td class="p-4">
+                    <div class="d-flex align-items-center">
+                      <% if si.product.images.attached? %>
+                        <%= image_tag si.product.images.first, class: "d-block ui-w-40 ui-bordered mr-4 product-image-square me-2" %>
+                      <% end %>
+                      <div>
+                        <%= link_to si.product.name, product_path(si.product), class: "d-block text-dark mb-1 h3" %>
+                        <small>
+                          <% if si.product.color %>
+                            <span class="text-muted">Color:</span>
+                            <span class="ui-product-color ui-product-color-sm align-text-bottom" style="background-color:<%= si.product.color.hex_value %>;"></span> &nbsp;
+                          <% end %>
+                          <% if si.product.size %>
+                            <span class="text-muted">Size:</span> <%= si.product.size.name %> &nbsp;
+                          <% end %>
+                          <% if si.product.categories.any? %>
+                            <span class="text-muted">Categorias:</span> <%= si.product.categories.map(&:name).join(", ") %> &nbsp;
+                          <% end %>
+                        </small>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-right font-weight-semibold align-middle p-4"><%= number_to_currency(si.price) %></td>
+                  <td class="align-middle p-4">
+                      <%= form.fields_for :sale_items, si do |f| %>
+                        <%= f.number_field :quantity, min: 1, class: "form-control quantity-input", data: { price: si.price, target: "subtotal-#{si.id}" } %>
+                      <% end %>
+                  </td>
+                  <td class="text-right font-weight-semibold align-middle p-4"><%= number_to_currency(si.subtotal) %></td>
+                  <td class="text-center align-middle px-0">
+                    <%= link_to '×', sale_sale_item_path(sale_id: sale.id, id: si.id), 
+                        data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this item?" }, 
+                        class: "shop-tooltip close float-none text-danger", title: "Eliminar" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex flex-wrap justify-content-between align-items-end pb-4">
+            <div class="mt-4">
+              <%= form.submit "Actualizar cantidades", class: "btn btn-outline-secondary" %>
+            </div>
+          <div class="d-flex">
+            <div class="text-right mt-4">
+              <label class="text-muted font-weight-normal m-0">Total price</label>
+              <div class="text-large"><strong><%= number_to_currency(sale.total) %></strong></div>
+            </div>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

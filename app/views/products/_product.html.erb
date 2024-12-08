@@ -1,46 +1,47 @@
-<div id="<%= dom_id product %>">
-  <p>
-    <strong>Name:</strong>
-    <%= product.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= product.description %>
-  </p>
-
-  <p>
-    <strong>Stock:</strong>
-    <%= product.stock %>
-  </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= product.price %>
-  </p>
-
-  <p>
-    <strong>Category:</strong>
-    <%= product.categories.map(&:name).join(", ") %>
-  </p>
-
-  <p>
-    <strong>Size:</strong>
-    <%= product.size_id %>
-  </p>
-
-  <p>
-    <strong>Color:</strong>
-    <%= product.color_id %>
-  </p>
-
-  <p>
-    <strong>Images:</strong>
-    <div class="product-images">
-      <% product.images.each do |image| %>
-        <%= image_tag url_for(image) %>
-      <% end %>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-md-6 align-items-center">
+              <% for image in product.images %>
+                <%= image_tag url_for(image), class: "card-img-top mb-5 mb-md-0", alt: product.name %>
+              <% end %>
+            </div>
+            <div class="col-md-6 mt-2 align-items-start">
+                <h1 class="display-5 fw-bolder"><%= product.name %></h1>
+                <div class="small mb-1">Categorias: <%= product.categories.map(&:name).join(", ") %></div>
+                <div class="fs-2 mb-5 mt-2">
+                  <span><%= number_to_currency(product.price) %></span>
+                </div>
+                <div class="description-box mb-4" style="height: 150px; overflow-y: auto; padding: 10px;">
+                  <p class="lead"><%= product.description %></p>
+                </div>
+                <% if current_user %>
+                  <% sale_item = current_sale.sale_items.find_by(product_id: product.id) %>
+                  <% if sale_item %>
+                    <p><strong>En el carrito:</strong> <%= sale_item.quantity %></p>
+                  <% else %>
+                    <%= form_with(model: [current_sale, SaleItem.new], local: true) do |f| %>
+                        <div class="input-group justify-content-end">
+                            <%= f.number_field :quantity, { min: 1, class: "form-control text-center", id: "inputQuantity", value: 1, style: "max-width: 5rem", placeholder: "Cantidad" } %>
+                            <%= f.hidden_field :product_id, value: product.id %>
+                            <%= f.hidden_field :price, value: product.price %>
+                            <%= f.submit "Añadir al carrito", class:"btn btn-outline-dark flex-shrink-0" %>
+                        </div>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <div class="row mt-4">
+                  <div class="col-4 text-start">
+                    <a href="<%= edit_product_path(product) %>" class="btn btn-outline-dark">Editar</a>
+                  </div>
+                  <div class="col-4 text-center">
+                    <%= link_to "Eliminar", product, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn-outline-danger" %>
+                  </div>
+                  <div class="col-4 text-end">
+                    <%= link_to "Volver", :back, class: "btn btn-outline-dark" %>
+                  </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </p>
-
-</div>
+</section>

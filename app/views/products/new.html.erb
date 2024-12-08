@@ -1,11 +1,7 @@
-<% content_for :title, "New product" %>
+<% content_for :title, "Nuevo producto" %>
 
-<h1>New product</h1>
-
-<%= render "form", product: @product %>
-
-<br>
-
-<div>
-  <%= link_to "Back to products", products_path %>
+<div class="text-center py-5">
+  <h1>Creando nuevo producto</h1>
 </div>
+
+<%= render "newf", product: @product %>
