@@ -1,6 +1,50 @@
-<% content_for :title, "Editing user" %>
+<% content_for :title, "Editando usuario" %>
 
 <div class="text-center py-5">
-  <h1>Editing user</h1>
+  <h1>Editando usuario</h1>
 </div>
-<%= render "form", user: @user %>
+
+<section>
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      
+      <%= render "form", user: @user %>
+
+      <div class="row mt-4">
+        <div class="col text-start">
+          <%= link_to "Volver", :back, class: "btn btn-outline-dark" %>
+        </div>
+        <div class="col text-center">
+          <% if !@user.deactivated %>
+            <%= link_to "Desactivar", "#", class: "btn btn-outline-danger", id: 'deactivate-link', data: { bs_toggle: 'modal', bs_target: '#deactivateModal' } %>
+          <% end %>
+        </div>
+        <div class="col text-end">
+          <%= link_to "Listado", users_path, class: "btn btn-outline-dark" %>
+        </div>
+      </div>
+
+
+    </div>
+    
+  </div>
+</section>
+
+    <!-- Deactivate modal -->
+    <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="deactivateModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deactivateModalLabel">Confirmar desactivación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ¿Estás seguro de que deseas desactivar este usuario?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <%= button_to "Desactivar", deactivate_user_path(@user), method: :patch, class: "btn btn-danger" %>
+          </div>
+        </div>
+      </div>
+    </div>
