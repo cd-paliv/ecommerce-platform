@@ -27,6 +27,10 @@ class Sale < ApplicationRecord
     self.sale_items.to_a.sum { |si| si.price * si.quantity }
   end
 
+  def total_quantity
+    self.sale_items.to_a.sum { |si| si.quantity }
+  end
+
   private
 
   def calculate_total

@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   validates :username, :email, presence: true, uniqueness: true
   validates :name, :password_digest, presence: true
+  validates :phone, format: { with: /\A\d{10}\z/ }, allow_blank: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   ROLES = %w[admin manager employee].freeze
 

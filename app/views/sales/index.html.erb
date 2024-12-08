@@ -1,13 +1,98 @@
-<% content_for :title, "Sales" %>
+<% content_for :title, "Ventas" %>
 
-<h1>Sales</h1>
-
-<div id="sales">
-  <% @sales.each do |sale| %>
-    <%= render sale %>
-    <p>
-      <%= link_to "Show this sale", sale %>
-    </p>
-  <% end %>
+<div class="text-center py-5">
+  <h1>Ventas</h1>
 </div>
 
+<div class="container bootstrap snippets bootdey px-4 px-lg-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main-box no-header clearfix">
+        <div class="main-box-body clearfix">
+          <div class="table-responsive">
+            <table class="table sale-list rounded table-bordered">
+              <thead>
+                <tr class="text-center">
+                  <th style="width: 5%;"><span>ID</span></th>
+                  <th><span>Empleado</span></th>
+                  <th><span>Creado</span></th>
+                  <th><span>Estado</span></th>
+                  <th style="width: 10%;"><span>Total</span></th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sales.each do |sale| %>
+                  <tr id="<%= dom_id sale %>">
+                    <td><%= sale.id %></td>
+                    <td><%= sale.user.username %></td>
+                    <td><%= sale.created_at.strftime("%d/%m/%Y") %></td>
+                    <td class="text-center">
+                      <% if sale.pending? %>
+                        <span class="label label-secondary">Pendiente</span>
+                      <% elsif sale.completed? %>
+                        <span class="label label-success">Completada</span>
+                      <% elsif sale.canceled? %>
+                        <span class="label label-danger">Cancelada</span>
+                      <% end %>
+                    <td><%= number_to_currency(sale.total) %></td>
+                    </td>
+                    <td class="text-center">
+                      <div class="btn-group" style="display: inline-flex;">
+                        <%= link_to 'Ver', sale_path(sale), class: "btn btn-outline-primary btn-sm" %>
+                        <% if sale.pending? %>
+                          <%= link_to 'Completar', '#', class: "btn btn-outline-success btn-sm", data: { bs_toggle: 'modal', bs_target: "#completeModal-#{sale.id}" } %>
+                        <% elsif sale.completed? %>
+                          <%= link_to 'Cancelar', '#', class: "btn btn-outline-danger btn-sm", data: { bs_toggle: 'modal', bs_target: "#cancelModal-#{sale.id}" } %>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Complete Modal -->
+                  <div class="modal fade" id="completeModal-<%= sale.id %>" tabindex="-1" role="dialog" aria-labelledby="completeModalLabel-<%= sale.id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="completeModalLabel-<%= sale.id %>">Confirmar completar venta</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          ¿Estás seguro que deseas completar esta venta?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <%= button_to 'Completar', checkout_sale_path(sale), method: :post, class: "btn btn-success" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Cancel Modal -->
+                  <div class="modal fade" id="cancelModal-<%= sale.id %>" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel-<%= sale.id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="cancelModalLabel-<%= sale.id %>">Confirmar cancelar venta</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          ¿Estás seguro que deseas cancelar esta venta?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <%= button_to 'Cancelar', cancel_sale_path(sale), method: :patch, class: "btn btn-danger" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

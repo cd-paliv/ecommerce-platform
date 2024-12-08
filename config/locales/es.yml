@@ -10,17 +10,22 @@ es:
         password_confirmation: "Confirmación de contraseña"
         phone: "Teléfono"
         role: "Rol"
+        created_at: "Fecha de creación"
+        updated_at: "Fecha de actualización"
+      product:
+        name: "Nombre"
+        description: "Descripción"
+        price: "Precio"
+        stock: "Stock disponible"
+        category_id: "Categoría"
+        created_at: "Fecha de creación"
+        updated_at: "Fecha de actualización"
+        
 
     errors:
-      models:
-        sale_item:
-          attributes:
-            price:
-              blank: "no puede estar en blanco"
-              not_a_number: "no es un número"
-        product:
-          attributes:
-            images:
-              blank: "no puede estar en blanco"
       messages:
         record_invalid: "La validación falló: %{errors}"
+        blank: "no puede estar en blanco"
+        not_a_number: "no es un número"
+        not_an_integer: "no es un número entero"
+        invalid: "no es válido"

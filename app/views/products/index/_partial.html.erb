@@ -1,0 +1,31 @@
+<div class="col mb-5">
+    <div class="card h-100">
+        <%= image_tag url_for(product.images.first), class: "card-img-top", alt: product.name %>
+        <div class="card-body p-4">
+            <div class="text-center">
+                <h5 class="fw-bolder"><%= product.name %></h5>
+                <%= number_to_currency(product.price) %>
+            </div>
+        </div>
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+                <%= link_to "Detalles", product_path(product), class: "btn btn-outline-dark mt-auto mb-2" %>
+                <% if current_user %>
+                    <% sale_item = current_sale.sale_items.find_by(product_id: product.id) %>
+                    <% if sale_item %>
+                        <p><strong>En el carrito:</strong> <%= sale_item.quantity %></p>
+                    <% else %>
+                        <%= form_with(model: [current_sale, SaleItem.new], local: true) do |f| %>
+                            <div class="input-group">
+                                <%= f.number_field :quantity, min: 1, class: "form-control", placeholder: "Cantidad" %>
+                                <%= f.hidden_field :product_id, value: product.id %>
+                                <%= f.hidden_field :price, value: product.price %>
+                                <%= f.submit "Añadir", class: "btn btn-outline-dark" %>
+                            </div>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

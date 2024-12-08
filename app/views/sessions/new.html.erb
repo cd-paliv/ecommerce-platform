@@ -1,17 +1,28 @@
-<h1>Login</h1>
-
-<%= form_with(url: sessions_create_path, local: true) do |form| %>
-    <div>
-        <%= form.label :email %>
-        <%= form.text_field :email %>
+<div class="signin-container d-flex align-items-center mt-4">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <%= form_with(url: sessions_create_path, local: true, html: { class: "form-signin" }) do |form| %>
+            <div class="text-center mt-5">
+                <h1 class="mb-4 display-4">Avivas</h1>
+                <h1 class="h3 mb-3 font-weight-normal">Inicio de sesión</h1>
+            </div>
+          
+            <div class="form-group my-4">
+                <%= form.label :email, "Email", class: "sr-only" %>
+                <%= form.email_field :email, class: "form-control", required: true, autofocus: true %>
+            </div>
+            
+            <div class="form-group my-4">
+                <%= form.label :password, "Contraseña", class: "sr-only" %>
+                <%= form.password_field :password, class: "form-control", required: true %>
+            </div>
+            
+            <div class="text-center my-4">
+                <%= form.submit "Ingresar", class: "btn btn-outline-primary btn-block" %>
+            </div>
+        <% end %>
+      </div>
     </div>
-
-    <div>
-        <%= form.label :password %>
-        <%= form.password_field :password %>
-    </div>
-
-    <div>
-        <%= form.submit "Login" %>
-    </div>
-<% end %>
+  </div>
+</div>

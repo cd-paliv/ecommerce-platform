@@ -3,7 +3,7 @@ class SalesController < ApplicationController
 
   # GET /sales or /sales.json
   def index
-    @sales = Sale.all
+    @sales = Sale.order(updated_at: :desc).all
   end
 
   # GET /sales/1 or /sales/1.json
@@ -18,7 +18,7 @@ class SalesController < ApplicationController
   def update
     respond_to do |format|
       if @sale.update(sale_params)
-        format.html { redirect_to @sale, notice: "Sale was successfully updated." }
+        format.html { redirect_to @sale, notice: "Venta actualizada." }
         format.json { render :show, status: :ok, location: @sale }
       else
         flash.now[:error] = @sale.errors.full_messages.join(", ")
@@ -31,13 +31,13 @@ class SalesController < ApplicationController
   # POST /sales/1/checkout
   def checkout
     if @sale.sale_items.empty?
-      redirect_to @sale, alert: "Sale is empty."
+      redirect_to @sale, alert: "El carrito no tiene productos."
       return
     end
 
     @sale.update!(status: "completed")
 
-    redirect_to @sale, notice: "Sale was successfully completed."
+    redirect_to @sale, notice: "Venta completada."
 
     new_sale = Sale.create!(user: current_user)
     session[:sale_id] = new_sale.id
@@ -47,7 +47,7 @@ class SalesController < ApplicationController
   def cancel
     @sale.update!(status: "canceled")
 
-    redirect_to @sale, notice: "Sale was successfully canceled."
+    redirect_to @sale, notice: "Venta cancelada."
   end
 
   private

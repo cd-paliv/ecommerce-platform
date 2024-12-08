@@ -13,7 +13,7 @@ class SaleItemsController < ApplicationController
     @sale = @sale_item.sale
     @sale_item.destroy
 
-    redirect_to edit_sale_path(@sale), notice: "Item removed successfully."
+    redirect_to @sale, notice: "Item removed successfully."
   end
 
   private

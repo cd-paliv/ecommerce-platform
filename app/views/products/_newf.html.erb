@@ -1,0 +1,51 @@
+<section>
+  <div class="container px-4 px-lg-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <%= form_with(model: product, local: true, html: { multipart: true }) do |form| %>
+          <div class="mb-3 row">
+            <%= form.label :name, "Nombre", class: "col-sm-2 col-form-label" %>
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+
+          <div class="mb-3 row">
+            <%= form.label :description, "Descripcion", class: "col-sm-2 col-form-label" %>
+              <%= form.text_field :description, class: "form-control" %>
+          </div>
+
+          <div class="mb-3 row">
+            <%= form.label :stock, "Stock", class: "col-sm-2 col-form-label" %>
+              <%= form.number_field :stock, class: "form-control" %>
+          </div>
+
+          <div class="mb-3 row">
+            <%= form.label :price, "Precio", class: "col-sm-2 col-form-label" %>
+              <%= form.text_field :price, class: "form-control" %>
+          </div>
+
+          <div class="mb-3 row">
+            <%= form.label :category_ids, "Categorias", class: "col-sm-2 col-form-label" %>
+              <%= form.collection_select :category_ids, @categories, :id, :display_name, {}, { multiple: true, class: "form-control" } %>
+          </div>
+
+          <div class="mb-3 row">
+            <%= form.label :images, "Agregar imágenes", class: "col-sm-2 col-form-label text-nowrap" %>
+              <%= form.file_field :images, multiple: true, class: "form-control" %>
+          </div>
+
+          <div class="mt-4 text-center">
+            <%= form.submit "Guardar", class: "btn btn-outline-primary" %>
+          </div>
+        <% end %>
+        <div class="row my-5">
+          <div class="col text-start">
+            <%= link_to "Volver", :back, class: "btn btn-outline-dark" %>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Listado", products_path, class: "btn btn-outline-dark" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
