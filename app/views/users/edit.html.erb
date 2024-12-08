@@ -15,7 +15,7 @@
           <%= link_to "Volver", :back, class: "btn btn-outline-dark" %>
         </div>
         <div class="col text-center">
-          <% if !@user.deactivated %>
+          <% if !@user.deactivated && current_user != @user %>
             <%= link_to "Desactivar", "#", class: "btn btn-outline-danger", id: 'deactivate-link', data: { bs_toggle: 'modal', bs_target: '#deactivateModal' } %>
           <% end %>
         </div>
