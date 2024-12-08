@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
 
     def handle_access_denied(exception)
       if user_signed_in?
-        redirect_to root_path, alert: "No estás autorizado para acceder a esta página - #{exception.message}"
+        redirect_to root_path, alert: "No estás autorizado para acceder a esta página"
       else
         redirect_to sessions_new_path, alert: "Debes iniciar sesión para acceder a esta página"
       end

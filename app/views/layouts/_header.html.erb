@@ -15,15 +15,17 @@
                         <% end %>
                     </ul>
                 </li>
-                <% if current_user %>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
-                        <ul class="dropdown-menu">
-                            <li><%= link_to "Todos", users_path, class: "dropdown-item" %></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><%= link_to "Agregar usuario", new_user_path, class: "dropdown-item" %></li>
-                        </ul>
-                    </li>
+                <% if current_user  %>
+                    <% if can?(:manage, User) %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
+                            <ul class="dropdown-menu">
+                                <li><%= link_to "Todos", users_path, class: "dropdown-item" %></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><%= link_to "Agregar usuario", new_user_path, class: "dropdown-item" %></li>
+                            </ul>
+                        </li>
+                    <% end %>
                     <li class="nav-item"><%= link_to "Ventas", sales_path, class: "nav-link" %></li>
                 <% end %>
             </ul>
