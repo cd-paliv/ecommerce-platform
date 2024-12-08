@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to new_session_path unless user_signed_in?
+    redirect_to sessions_new_path unless user_signed_in?
   end
 
   def current_sale
@@ -37,9 +37,9 @@ class ApplicationController < ActionController::Base
 
     def handle_access_denied(exception)
       if user_signed_in?
-        redirect_to root_path, alert: "You are not authorized to access this page - " + exception.message
+        redirect_to root_path, alert: "No estás autorizado para acceder a esta página - #{exception.message}"
       else
-        redirect_to new_session_path, alert: "You need to log in before continuing."
+        redirect_to sessions_new_path, alert: "Debes iniciar sesión para acceder a esta página"
       end
     end
 

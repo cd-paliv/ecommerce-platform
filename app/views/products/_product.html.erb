@@ -32,10 +32,14 @@
                 <% end %>
                 <div class="row mt-4">
                   <div class="col-4 text-start">
-                    <a href="<%= edit_product_path(product) %>" class="btn btn-outline-dark">Editar</a>
+                    <% if can?(:edit, product) %>
+                      <a href="<%= edit_product_path(product) %>" class="btn btn-outline-dark">Editar</a>
+                    <% end %>
                   </div>
                   <div class="col-4 text-center">
-                    <%= link_to "Eliminar", product, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn-outline-danger" %>
+                    <% if can?(:destroy, product) %>
+                      <%= link_to "Eliminar", product, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn-outline-danger" %>
+                    <% end %>
                   </div>
                   <div class="col-4 text-end">
                     <%= link_to "Volver", :back, class: "btn btn-outline-dark" %>
