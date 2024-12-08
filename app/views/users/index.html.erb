@@ -13,17 +13,24 @@
             <table class="table user-list rounded table-bordered">
               <thead>
                 <tr class="text-center">
-                  <th><span>Nombre de usuario</span></th>
+                  <th><span>Nombre</span></th>
+                  <th><span>Usuario</span></th>
+                  <th><span>Email</span></th>
+                  <th><span>Rol</span></th>
                   <th><span>Creado</span></th>
                   <th><span>Estado</span></th>
-                  <th><span>Email</span></th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 <% @users.each do |user| %>
                   <tr id="<%= dom_id user %>">
+                    <td><%= user.name %></td>
                     <td><a><%= user.username %></a></td>
+                    <td>
+                      <a href="mailto:<%= user.email %>"><%= user.email %></a>
+                    </td>
+                    <td><%= user.role.titleize %></td>
                     <td><%= user.created_at.strftime("%d/%m/%Y") %></td>
                     <td class="text-center">
                       <% if user.deactivated %>
@@ -31,9 +38,6 @@
                       <% else %>
                         <span class="label label-success">Active</span>
                       <% end %>
-                    </td>
-                    <td>
-                      <a href="mailto:<%= user.email %>"><%= user.email %></a>
                     </td>
                     <td class="text-center" style="width: 20%;">
                       <a href="<%= edit_user_path(user) %>" class="table-link text-secondary">
