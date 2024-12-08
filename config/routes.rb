@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :clients
   get "home/index"
   get "sessions/new"
   post "sessions/create"
