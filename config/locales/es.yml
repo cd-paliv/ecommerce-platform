@@ -29,3 +29,4 @@ es:
         not_a_number: "no es un número"
         not_an_integer: "no es un número entero"
         invalid: "no es válido"
+        required: "es requerido"

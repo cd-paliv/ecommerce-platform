@@ -35,7 +35,10 @@ class SalesController < ApplicationController
       return
     end
 
-    @sale.update!(status: "completed")
+    client = Client.find_or_initialize_by(email: params[:client][:email])
+    client.update(client_params)
+
+    @sale.update!(status: "completed", client: client)
 
     redirect_to @sale, notice: "Venta completada."
 
@@ -57,5 +60,9 @@ class SalesController < ApplicationController
 
     def sale_params
       params.require(:sale).permit(sale_items_attributes: [ :id, :product_id, :quantity, :price, :_destroy ])
+    end
+
+    def client_params
+      params.require(:client).permit(:name, :email, :phone)
     end
 end
