@@ -28,11 +28,6 @@
               <%= form.collection_select :category_ids, @categories, :id, :display_name, {}, { multiple: true, class: "form-control" } %>
           </div>
 
-          <div class="mb-3 row">
-            <%= form.label :images, "Agregar imágenes", class: "col-sm-2 col-form-label text-nowrap" %>
-              <%= form.file_field :images, multiple: true, class: "form-control" %>
-          </div>
-
           <div class="mt-4 text-center">
             <%= form.submit "Guardar", class: "btn btn-outline-primary" %>
           </div>
