@@ -86,7 +86,7 @@ else
 end
 
 p3 = Product.new(
-  name: "Trench Verde Bosque",
+  name: "Trench Verde",
   description: "Trench verdes como el bosque",
   stock: 75,
   price: 59.99,

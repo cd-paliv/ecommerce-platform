@@ -14,7 +14,9 @@
                 <th class="text-right py-3 px-4" style="width: 100px;">Precio</th>
                 <th class="text-center py-3 px-4" style="width: 120px;">Cantidad</th>
                 <th class="text-right py-3 px-4" style="width: 100px;">Subtotal</th>
-                <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                <% if sale.pending?%>
+                  <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                <% end %>
               </tr>
             </thead>
             <tbody>
@@ -49,11 +51,13 @@
                       <% end %>
                   </td>
                   <td class="text-right font-weight-semibold align-middle p-4"><%= number_to_currency(si.subtotal) %></td>
-                  <td class="text-center align-middle px-0">
-                    <%= link_to '×', sale_sale_item_path(sale_id: sale.id, id: si.id), 
-                        data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this item?" }, 
-                        class: "shop-tooltip close float-none text-danger", title: "Eliminar" %>
-                  </td>
+                  <% if sale.pending? %>
+                    <td class="text-center align-middle px-0">
+                      <%= link_to '×', sale_sale_item_path(sale_id: sale.id, id: si.id), 
+                          data: { turbo_method: :delete, turbo_confirm: "Estas seguro que deseas eliminar este producto?" },
+                          class: "shop-tooltip close float-none text-danger", title: "Eliminar" %>
+                    </td>
+                  <% end %>
                 </tr>
               <% end %>
             </tbody>
@@ -61,7 +65,9 @@
         </div>
         <div class="d-flex flex-wrap justify-content-between align-items-end pb-4">
             <div class="mt-4">
-              <%= form.submit "Actualizar cantidades", class: "btn btn-outline-secondary" %>
+              <% if sale.pending? %>
+                <%= form.submit "Actualizar cantidades", class: "btn btn-outline-secondary" %>
+              <% end %>
             </div>
           <div class="d-flex">
             <div class="text-right mt-4">
