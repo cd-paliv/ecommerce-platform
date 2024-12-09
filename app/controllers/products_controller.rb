@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: "Product was successfully created." }
+        format.html { redirect_to @product, notice: "Producto creado correctamente" }
         format.json { render :show, status: :created, location: @product }
       else
         flash.now[:error] = @product.errors.full_messages.join(", ")
@@ -52,7 +52,7 @@ class ProductsController < ApplicationController
         if params[:product][:images]
           @product.images.attach(params[:product][:images])
         end
-        format.html { redirect_to @product, notice: "Product was successfully updated." }
+        format.html { redirect_to @product, notice: "Producto actualizado correctamente" }
         format.json { render :show, status: :ok, location: @product }
       else
         flash.now[:error] = @product.errors.full_messages.join(", ")
@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1 or /products/1.json
   def destroy
     if @product.update!(stock: 0, deleted_at: Time.now)
-      flash[:notice] = "Product was successfully destroyed."
+      flash[:notice] = "Producto eliminado correctamente"
     else
       flash[:error] = @product.errors.full_messages.join(", ")
     end
