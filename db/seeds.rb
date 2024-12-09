@@ -36,90 +36,103 @@ Color.find_or_create_by!(name: "Blanco", hex_value: "#FFFFFF")
 Color.find_or_create_by!(name: "Negro", hex_value: "#000000")
 
 # Create products
-p1 = Product.new(
-  name: "Blazer Elegante",
-  description: "Un blazer elegante para cualquier ocasión",
-  stock: 100,
-  price: 29.99,
-  size: Size.find_by(name: "M"),
-  color:  Color.find_by(name: "Blanco")
-)
-p1.categories = [
-  Category.find_by(name: "Abrigo"),
-  Category.find_by(name: "Otoño"),
-  Category.find_by(name: "Mujer")
+products = [
+  {
+    name: "Blazer Elegante",
+    description: "Blazer de cuello solapa y manga larga. Bolsillos de plastrón en delantero. Detalle de puntilla combinada a tono. Cierre frontal con botón.",
+    stock: 100,
+    price: 29.99,
+    size: "M",
+    color: "Blanco",
+    categories: [ "Abrigo", "Otoño", "Mujer" ],
+    images_path: 'blazer'
+  },
+  {
+    name: "Sandalias",
+    description: "Sandalia plana en piel con tiras cruzadas. Suela con volumen. Cierre mediante hebilla.",
+    stock: 50,
+    price: 49.99,
+    size: "38",
+    color: "Negro",
+    categories: [ "Calzado", "Verano", "Mujer" ],
+    images_path: 'sandalia'
+  },
+  {
+    name: "Trench Oversize",
+    description: "Trench oversize fit confeccionado en tejido de algodón. Cuello solapa y manga larga. Bolsillos de vivo en cadera. Efecto lavado. Cierre frontal con botonadura oculta por solapa.",
+    stock: 75,
+    price: 59.99,
+    size: "L",
+    color: "Verde",
+    categories: [ "Abrigo", "Invierno", "Hombre" ],
+    images_path: 'trench'
+  },
+  {
+    name: "Bolso Floral",
+    description: "Bolso tipo sobre en tejido. Detalle de flores en el cuerpo. Asa de mano y asa bandolera en cadena. Cierre mediante imán. Forro interior con bolsillo.",
+    stock: 30,
+    price: 79.99,
+    size: "M",
+    color: "Negro",
+    categories: [ "Accesorios", "Primavera", "Mujer" ],
+    images_path: 'bolso'
+  },
+  {
+    name: "Camisa Cuadros",
+    description: "Camisa boxy fit confeccionada en tejido con mezcla de viscosa y lino. Cuello bowling y manga corta. Bajo con aberturas laterales. Cierre frontal de botonadura.",
+    stock: 120,
+    price: 19.99,
+    size: "L",
+    color: "Azul",
+    categories: [ "Remera", "Primavera", "Hombre" ],
+    images_path: 'camisa'
+  },
+  {
+    name: "Vestido Denim",
+    description: "Vestido midi confeccionado en hilatura con mezcla de algodón. Cuello redondo y manga sisa. Detalle de abertura en espalda y pespuntes marcados ",
+    stock: 80,
+    price: 39.99,
+    size: "S",
+    color: "Rojo",
+    categories: [ "Verano", "Mujer" ],
+    images_path: 'vestido'
+  }
 ]
-Dir.glob(Rails.root.join('app/assets/images/products/blazer/*')).each do |image_path|
-  p1.images.attach(
-    io: File.open(image_path),
-    filename: File.basename(image_path),
-    content_type: 'image/jpg'
+
+products.each do |product_data|
+  product = Product.new(
+    name: product_data[:name],
+    description: product_data[:description],
+    stock: product_data[:stock],
+    price: product_data[:price],
+    size: Size.find_by!(name: product_data[:size]),
+    color: Color.find_by!(name: product_data[:color])
   )
-end
-if p1.save
-  puts "Product p1 created"
-else
-  puts "Product p1 failed: #{p1.errors.full_messages.join(", ")}"
-end
-
-p2 = Product.new(
-  name: "Sandalias",
-  description: "Unas sandalias marrones.",
-  stock: 50,
-  price: 49.99,
-  size: Size.find_by!(name: "38"),
-  color: Color.find_by!(name: "Negro"),
-)
-p2.categories = [ Category.find_by(name: "Calzado"), Category.find_by(name: "Verano"), Category.find_by(name: "Mujer") ]
-Dir.glob(Rails.root.join('app/assets/images/products/sandalia/*')).each do |image_path|
-  p2.images.attach(
-    io: File.open(image_path),
-    filename: File.basename(image_path),
-    content_type: 'image/jpg'
-  )
-end
-
-if p2.save
-  puts "Product p2 created"
-else
-  puts "Product p2 failed: #{p2.errors.full_messages.join(", ")}"
-end
-
-p3 = Product.new(
-  name: "Trench Verde",
-  description: "Trench verdes como el bosque",
-  stock: 75,
-  price: 59.99,
-  size: Size.find_by!(name: "L"),
-  color: Color.find_by!(name: "Verde")
-)
-p3.categories = [ Category.find_by(name: "Abrigo"), Category.find_by(name: "Invierno"), Category.find_by(name: "Hombre") ]
-Dir.glob(Rails.root.join('app/assets/images/products/trench/*')).each do |image_path|
-  p3.images.attach(
-    io: File.open(image_path),
-    filename: File.basename(image_path),
-    content_type: 'image/jpg'
-  )
-end
-
-if p3.save
-  puts "Product p3 created"
-else
-  puts "Product p3 failed: #{p3.errors.full_messages.join(", ")}"
+  product.categories = product_data[:categories].map { |category_name| Category.find_by!(name: category_name) }
+  Dir.glob(Rails.root.join("app/assets/images/products/#{product_data[:images_path]}/*")).each do |image_path|
+    product.images.attach(
+      io: File.open(image_path),
+      filename: File.basename(image_path),
+      content_type: 'image/jpg'
+    )
+  end
+  if !product.save
+    puts "Product #{product_data[:name]} failed: #{product.errors.full_messages.join(", ")}"
+  end
 end
 
 # Create users
-User.find_or_create_by!(username: "admin", email: "admin@avivas.com", name: "Admin 1") do |user|
+User.find_or_create_by!(username: "admin", email: "admin@avivas.com", name: "Alice Johnson") do |user|
   user.password = "admin"
   user.role = "admin"
 end
 
-User.find_or_create_by!(username: "man", email: "man@avivas.com", name: "Man 1") do |user|
+User.find_or_create_by!(username: "man", email: "man@avivas.com", name: "Bob Smith") do |user|
   user.password = "man"
   user.role = "manager"
 end
 
-User.find_or_create_by!(username: "emp", email: "emp@avivas.com", name: "Emp 1") do |user|
+User.find_or_create_by!(username: "emp", email: "emp@avivas.com", name: "Charlie Brown") do |user|
   user.password = "emp"
   user.role = "employee"
 end

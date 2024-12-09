@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   helper_method :current_user, :current_sale
 
+  include Pagy::Backend
+
   rescue_from CanCan::AccessDenied do |exception|
     handle_access_denied(exception)
   end

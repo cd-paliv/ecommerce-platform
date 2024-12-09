@@ -48,8 +48,8 @@ end
 gem "cancancan" # Authorization
 gem "bcrypt", "~> 3.1.7" # Secure password hashing
 
-gem "jquery-rails", "~> 4.6"
-gem "activestorage", "~> 8.0"
+gem "jquery-rails", "~> 4.6" # jQuery
+gem "activestorage", "~> 8.0" # Attachments
 
-gem "carrierwave", "~> 3.0", ">= 3.0.7"
-gem 'paranoia'
+gem "paranoia" # Soft delete
+gem "pagy", "~> 9.3", ">= 9.3.3"
