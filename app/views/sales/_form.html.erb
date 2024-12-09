@@ -15,8 +15,8 @@
 
         <%= f.hidden_field :price %>
 
-        <%= link_to "Remove", sale_sale_item_path(sale_id: sale.id, id: f.object.id), 
-            data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this item?" } %>
+        <%= link_to "Quitar", sale_sale_item_path(sale_id: sale.id, id: f.object.id), 
+            data: { turbo_method: :delete, turbo_confirm: "Esta seguro de quitar este producto?" } %>
       </div>
     <% end %>
   </div>

@@ -210,6 +210,8 @@ GEM
       racc (~> 1.4)
     ostruct (0.6.1)
     parallel (1.26.3)
+    paranoia (3.0.0)
+      activerecord (>= 6, < 8.1)
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
@@ -421,6 +423,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails (~> 4.6)
   kamal
+  paranoia
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.0)
