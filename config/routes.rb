@@ -10,10 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products do
-    member do
-    end
-  end
+  resources :products
 
   resources :sales, except: [ :new, :destroy, :create ] do
     member do

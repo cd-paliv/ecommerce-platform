@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
+  acts_as_paranoid
   has_and_belongs_to_many :categories
   belongs_to :size, optional: true
   belongs_to :color, optional: true

@@ -35,7 +35,9 @@
                     <a href="<%= edit_product_path(product) %>" class="btn btn-outline-dark">Editar</a>
                   </div>
                   <div class="col-4 text-center">
-                    <%= link_to "Eliminar", product, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn-outline-danger" %>
+                    <%= link_to "Eliminar", product_path(product),
+                            data: { turbo_method: :delete, turbo_confirm: "¿Esta seguro de eliminar este producto?" },
+                            class: "btn btn-outline-danger" %>
                   </div>
                   <div class="col-4 text-end">
                     <%= link_to "Volver", :back, class: "btn btn-outline-dark" %>

@@ -64,10 +64,14 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.destroy!
+    if @product.update!(stock: 0, deleted_at: Time.now)
+      flash[:notice] = "Product was successfully destroyed."
+    else
+      flash[:error] = @product.errors.full_messages.join(", ")
+    end
 
     respond_to do |format|
-      format.html { redirect_to products_path, status: :see_other, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_path, status: :see_other }
       format.json { head :no_content }
     end
   end
