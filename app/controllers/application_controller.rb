@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
-  include Pagy::Backend
   before_action :set_locale
   allow_browser versions: :modern
   helper_method :current_user, :current_sale
+
+  include Pagy::Backend
 
   rescue_from CanCan::AccessDenied do |exception|
     handle_access_denied(exception)

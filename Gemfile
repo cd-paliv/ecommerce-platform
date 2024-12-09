@@ -52,4 +52,4 @@ gem "jquery-rails", "~> 4.6" # jQuery
 gem "activestorage", "~> 8.0" # Attachments
 
 gem "paranoia" # Soft delete
-gem "pagy" # Pagination
+gem "pagy", "~> 9.3", ">= 9.3.3"

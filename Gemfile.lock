@@ -398,7 +398,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails (~> 4.6)
   kamal
-  pagy
+  pagy (~> 9.3, >= 9.3.3)
   paranoia
   propshaft
   puma (>= 5.0)
