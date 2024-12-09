@@ -3,7 +3,7 @@ class SalesController < ApplicationController
 
   # GET /sales or /sales.json
   def index
-    @sales = Sale.order(updated_at: :desc).all
+    @pagy, @sales = pagy(Sale.order(updated_at: :desc).all)
   end
 
   # GET /sales/1 or /sales/1.json
