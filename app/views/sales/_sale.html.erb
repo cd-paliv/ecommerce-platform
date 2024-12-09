@@ -47,7 +47,7 @@
                   <td class="text-right font-weight-semibold align-middle p-4"><%= number_to_currency(si.price) %></td>
                   <td class="align-middle p-4">
                       <%= form.fields_for :sale_items, si do |f| %>
-                        <%= f.number_field :quantity, min: 1, class: "form-control quantity-input", data: { price: si.price, target: "subtotal-#{si.id}" } %>
+                        <%= f.number_field :quantity, min: 1, class: "form-control quantity-input", data: { price: si.price, target: "subtotal-#{si.id}" }, disabled: !sale.pending? %>
                       <% end %>
                   </td>
                   <td class="text-right font-weight-semibold align-middle p-4"><%= number_to_currency(si.subtotal) %></td>

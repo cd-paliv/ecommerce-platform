@@ -5,10 +5,6 @@
         <% product.images.each_with_index do |image, index| %>
           <div class="mb-3">
             <%= image_tag url_for(image), class: "card-img-top mb-5 mb-md-0 me-3", alt: product.name %>
-            <div class="form-check">
-              <%= check_box_tag "product[remove_images][]", image.signed_id, false, id: "remove_image_#{index}", class: "form-check-input" %>
-              <%= label_tag "remove_image_#{index}", "Eliminar imagen", class: "form-check-label" %>
-            </div>
           </div>
         <% end %>
       </div>
