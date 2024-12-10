@@ -1,14 +1,19 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
-  load_and_authorize_resource
+  load_and_authorize_resource except: :show
 
   # GET /products or /products.json
   def index
-    @pagy, @products = pagy(Product.all)
+    if can?(:manage, Product)
+      @pagy, @products = pagy(Product.with_deleted.order(:deleted_at))
+    else
+      @pagy, @products = pagy(Product.all.order(:updated_at))
+    end
   end
 
   # GET /products/1 or /products/1.json
   def show
+    @product = Product.with_deleted.find(params[:id])
+    authorize! :read, @product
   end
 
   # GET /products/new
@@ -74,11 +79,6 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params.expect(:id))
-    end
-
     # Only allow a list of trusted parameters through.
     def product_params
       params.require(:product).permit(:name, :description, :stock, :price, :size_id, :color_id, category_ids: [], images: [])
