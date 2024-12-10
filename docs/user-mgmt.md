@@ -32,3 +32,15 @@ El controlador del user maneja las acciones relacionadas con los usuarios:
 
 ### Autorización
 El controlador utiliza `load_and_authorize_resource` de la gema cancancan, método que verifica los permisos del usuario loggeado para asegurarse que está autorizado a realizar la acción solicitada.
+
+### Redirección
+Se creó además la función handle_access_denied en el controller de la aplicación para redirigir a los usuarios a la página de inicio en caso de que no tengan permisos para acceder a una página específica.
+```rb
+def handle_access_denied(exception)
+    if user_signed_in?
+    redirect_to root_path, alert: "No estás autorizado para acceder a esta página"
+    else
+    redirect_to sessions_new_path, alert: "Debes iniciar sesión para acceder a esta página"
+    end
+end
+```
