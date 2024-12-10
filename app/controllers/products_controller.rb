@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     if can?(:manage, Product)
-      @pagy, @products = pagy(Product.with_deleted.order(:deleted_at))
+      @pagy, @products = pagy(Product.with_deleted.order(:updated_at, :deleted_at))
     else
       @pagy, @products = pagy(Product.all.order(:updated_at))
     end
