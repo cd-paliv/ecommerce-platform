@@ -1,5 +1,6 @@
+require "bcrypt"
+
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy deactivate ]
   load_and_authorize_resource
 
   # GET /users or /users.json
@@ -27,7 +28,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
+        format.html { redirect_to @user, notice: "Usuario creado exitosamente." }
         format.json { render :show, status: :created, location: @user }
       else
         flash.now[:error] = @user.errors.full_messages.join(", ")
@@ -41,7 +42,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated." }
+        format.html { redirect_to @user, notice: "Usuario actualizado correctamente." }
         format.json { render :show, status: :ok, location: @user }
       else
         flash.now[:error] = @user.errors.full_messages.join(", ")
@@ -51,44 +52,22 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1 or /users/1.json
-  def destroy
-    @user.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to users_path, status: :see_other, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
-
   # PATCH /users/1/deactivate
   def deactivate
-    if @user.admin?
-      respond_to do |format|
-        format.html { redirect_to users_path, alert: "Admin user cannot be deactivated." }
-        format.json { render json: { error: "Admin user cannot be deactivated." }, status: :unprocessable_entity }
-      end
-    else
-      @user.update(deactivated: true, password_digest: SecureRandom.hex)
-      respond_to do |format|
-        if @user.save
-          format.html { redirect_to users_path, notice: "User was successfully deactivated." }
-          format.json { render :show, status: :ok, location: @user }
-        else
-          flash.now[:error] = @user.errors.full_messages.join(", ")
-          format.html { render :index, status: :unprocessable_entity }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
-        end
+    @user.update(deactivated: true, password_digest: BCrypt::Password.create(SecureRandom.hex))
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to users_path, notice: "Usuario desactivado exitosamente." }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        flash.now[:error] = @user.errors.full_messages.join(", ")
+        format.html { render :index, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:username, :email, :name, :password, :password_confirmation, :phone, :role)
