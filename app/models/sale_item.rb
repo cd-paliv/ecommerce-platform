@@ -13,6 +13,6 @@ class SaleItem < ApplicationRecord
   private
 
   def quantity_available
-    quantity > product.stock ? errors.add(:quantity, "is greater than available stock") : true
+    quantity > product.stock ? errors.add(:quantity, "es mayor que el stock disponible") : true
   end
 end
