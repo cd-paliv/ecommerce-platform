@@ -16,7 +16,7 @@ El modelo User incluye las siguientes validaciones:
 - Validación de contraseña utilizando bcrypt con `has_secure_password`.
 - Validación de presencia y unicidad para el nombre de usuario y correo electrónico.
 - Validación de formato para el teléfono y correo electrónico.
-- Validación de roles utilizando freeze para definir los roles permitidos (`admin`, `manager`, `employee`).
+- Validación de roles utilizando freeze para definir los roles permitidos (`admin`, `manager`, `employee`). Definido en detalle en [Permisos de la aplicación](extra/permission.md).
 
 ### Implementación
 El modelo User define una relación con ventas y funciones para determinar el rol del usuario en un momento dado comparándolo con un string.
