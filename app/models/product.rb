@@ -14,6 +14,10 @@ class Product < ApplicationRecord
     self.stock >= quantity
   end
 
+  def out_of_stock?
+    self.stock == 0
+  end
+
   def sell(quantity)
     self.update!(stock: self.stock - quantity)
   end

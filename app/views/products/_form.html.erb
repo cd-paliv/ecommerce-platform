@@ -39,6 +39,11 @@
             <%= form.label :images, "Agregar imágenes", class: "col-form-label" %>
             <%= form.file_field :images, multiple: true, class: "form-control" %>
           </div>
+          <% if @product.images.attached? %>
+            <% @product.images.each do |im| %>
+              <%= form.hidden_field :images, multiple: true, value: im.signed_id %>
+            <% end %>
+          <% end %>
 
           <div class="mt-4 text-center">
             <%= form.submit "Actualizar", class: "btn btn-outline-success" %>
