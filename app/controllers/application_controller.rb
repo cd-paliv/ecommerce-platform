@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
     handle_access_denied(exception)
   end
 
+  rescue_from ActionController::RoutingError, with: :handle_not_found
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def current_user
@@ -32,6 +33,10 @@ class ApplicationController < ActionController::Base
     sale
   end
 
+  def handle_not_found
+    render file: "#{Rails.root}/public/404.html", status: :not_found
+  end
+
   private
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale
@@ -44,6 +49,7 @@ class ApplicationController < ActionController::Base
         redirect_to sessions_new_path, alert: "Debes iniciar sesión para acceder a esta página"
       end
     end
+
 
     def record_not_found
       render file: "#{Rails.root}/public/404.html", status: :not_found

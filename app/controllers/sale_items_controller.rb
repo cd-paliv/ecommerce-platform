@@ -2,9 +2,9 @@ class SaleItemsController < ApplicationController
   def create
     @sale_item = current_sale.sale_items.new(sale_item_params)
     if @sale_item.save
-      redirect_to products_path, notice: "Product added to cart"
+      redirect_to products_path, notice: "Producto añadido al carrito"
     else
-      redirect_to products_path, alert: "Unable to add product to cart"
+      redirect_to products_path, alert: "Error al añadir producto al carrito"
     end
   end
 
@@ -13,7 +13,7 @@ class SaleItemsController < ApplicationController
     @sale = @sale_item.sale
     @sale_item.destroy
 
-    redirect_to @sale, notice: "Item removed successfully."
+    redirect_to @sale, notice: "Producto eliminado del carrito"
   end
 
   private
