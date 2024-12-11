@@ -25,12 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_sale
-    if current_user
-      sale = Sale.find_by(user: current_user, status: "pending") || Sale.create!(user: current_user)
-    else
-      sale = Sale.find_by(session_id: session.id, status: "pending") || Sale.create!(session_id: session.id)
-    end
-    sale
+    Sale.find_or_create_by!(user: current_user, status: "pending") if current_user
   end
 
   def handle_not_found
