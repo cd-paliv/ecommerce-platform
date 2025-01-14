@@ -3,6 +3,22 @@
 ## Descripción del Proyecto
 Este proyecto es una aplicación de gestión de productos y ventas para una cadena de tiendas. Permite a los empleados gestionar productos, registrar ventas y manejar el stock de manera eficiente.
 
+<div align="center">
+  <img src="docs/images/login.gif" alt="Login">
+</div>
+
+<br>
+
+<div align="center">
+  <img src="docs/images/stock-err.gif" alt="Stock error">
+</div>
+
+<br>
+
+<div align="center">
+  <img src="docs/images/checkout.gif" alt="Checkout">
+</div>
+
 ## Ruby y Rails Versiones
 - Ruby: 3.3.5
 - Rails: 8.0.0
@@ -24,7 +40,7 @@ rails s
 ```
 
 ### Inicialización de la bd
-El archivo `seeds.rb`contiene los datos necesarios para inicializar la bd con categorías, talles, colores, usuarios y productos.
+El archivo `seeds.rb` contiene los datos necesarios para inicializar la bd con categorías, talles, colores, usuarios y productos.
 
 ## Usuarios de Prueba
 Se crea un usuario para cada rol:
@@ -42,7 +58,10 @@ Se crea un usuario para cada rol:
 El modelo de base de datos se encuentra en el archivo [schema.rb](db/schema.rb).
 
 El modelo conceptual define las mismas entidades y relaciones actualmente en el schema.
-![Diagrama de Base de Datos](docs/images/db.svg)
+
+<div align="center">
+  <img src="docs/images/db.svg" alt="Diagrama de Base de Datos">
+</div>
 
 # Documentación
 La documentación detallada de cada parte del proyecto se encuentra en la carpeta `docs`, junto con el enunciado del trabajo.
