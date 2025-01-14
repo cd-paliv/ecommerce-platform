@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Catch all route for 404 errors
-  get "*path", to: "application#handle_not_found"
+  # get "*path", to: "application#handle_not_found"
 
   # Defines the root path route ("/")
   root "home#index"
